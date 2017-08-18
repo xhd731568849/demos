@@ -11,13 +11,15 @@ public class TestAnnotation {
         People people = new People();
         people.setId(1);
         people.setAge(18);
-        people.setSex(1);
+        people.setName("张三");
+        people.setSex("男");
         people.setIdCard("13063419951121001");
         //people.setAddress("草桥东路");
         People people1 = new People();
         people1.setId(12);
         people1.setAge(18);
-        people1.setSex(22);
+        people1.setName("李四");
+        people1.setSex("Aa");
         people1.setIdCard("130634199511210015");
         people1.setAddress("草桥东路");
         List<People> list = new ArrayList<People>();

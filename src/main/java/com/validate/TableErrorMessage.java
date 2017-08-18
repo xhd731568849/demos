@@ -7,7 +7,22 @@ import java.util.List;
  */
 public class TableErrorMessage {
     private String tableId;
+    private String msg;
     private List<FieldErrorMessage> fieldErrorMessages;
+
+    public TableErrorMessage(){}
+
+    public TableErrorMessage(String msg){
+        this.msg = msg;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
 
     public String getTableId() {
         return tableId;

@@ -32,7 +32,7 @@ public class Validate<T> {
         Class<?> clazz = t.getClass();
         Field[] declaredFields = clazz.getDeclaredFields();
         List<FieldErrorMessage> errorMessages = new ArrayList<FieldErrorMessage>();
-        Integer id = null;
+        String name = null;
         for(Field field : declaredFields){
             field.setAccessible(true);
             FieldMeta annotation = field.getAnnotation(FieldMeta.class);
@@ -42,19 +42,55 @@ public class Validate<T> {
                 if(errorMessage != null){
                     errorMessages.add(errorMessage);
                 }
-                FieldErrorMessage errorMessage1 = validateLength(annotation, field, t);
-                if(errorMessage1 != null) {
-                    errorMessages.add(errorMessage1);
+                if(annotation.length() != 0) {
+                    //不是0,就校验长度
+                    FieldErrorMessage errorMessage1 = validateLength(annotation, field, t);
+                    if(errorMessage1 != null) {
+                        errorMessages.add(errorMessage1);
+                    }
                 }
-                if(annotation.id() == true){
-                    id = (Integer) field.get(t);
+                if(annotation.values().length>1 && (!"".equals(annotation.values()[0]))){
+                    //校验是不是在这些固定的值中
+                    FieldErrorMessage errorMessage2 = validateInSpecificValues(annotation, field, t);
+                    if(errorMessage2!=null){
+                        errorMessages.add(errorMessage2);
+                    }
+                }
+
+                if(annotation.unionKey() == true){
+                    name = (String) field.get(t);
                 }
             }
         }
         TableErrorMessage tableErrorMessage = new TableErrorMessage();
         tableErrorMessage.setFieldErrorMessages(errorMessages);
-        tableErrorMessage.setTableId(id.toString());
+        tableErrorMessage.setTableId(name);
         return tableErrorMessage;
+    }
+
+    /**
+     * 校验是不是在规定的值中
+     * @param annotation
+     * @param field
+     * @param t
+     * @return
+     */
+    private FieldErrorMessage validateInSpecificValues(FieldMeta annotation, Field field, T t) throws IllegalAccessException {
+        Object o = field.get(t);
+        if(o == null){
+            //如果是空,就不用校验了
+            return null;
+        }
+        String obj = (String)o;
+        String[] values = annotation.values();
+        boolean findValue = false;
+        for(String str : values){
+            if(obj.equals(str)){
+                findValue = true;
+                break;
+            }
+        }
+        return findValue ? null : new FieldErrorMessage(field.getName()+"不在规定的取值中!");
     }
 
     /**
@@ -77,12 +113,12 @@ public class Validate<T> {
             obj = (String) o;
         }
 
-        if(annotation.lengthType() == LenthType.EQUAL_TO){
+        if(annotation.lengthType() == LengthType.EQUAL_TO){
             //如果是只能等于该长度
             if(obj.length() != annotation.length()){
                 return new FieldErrorMessage(field.getName()+"长度不符!");
             }
-        }else if(annotation.lengthType() == LenthType.LESS_THAN_EQUAL_TO){
+        }else if(annotation.lengthType() == LengthType.LESS_THAN_EQUAL_TO){
             //小于等于该长度
             if(obj.length() > annotation.length()){
                 return new FieldErrorMessage(field.getName()+"长度不符!");
