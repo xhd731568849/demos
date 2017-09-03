@@ -10,11 +10,12 @@ import java.lang.annotation.*;
 @Documented//说明该注解将被包含在javadoc中
 public @interface FieldMeta {
 
+    String[] values() default "";
     /**
-     * 是否是主键
+     * 标示唯一的一行
      * @return
      */
-    boolean id() default false;
+    boolean unionKey() default false;
 
     /**
      * 是否可以为空
@@ -36,12 +37,12 @@ public @interface FieldMeta {
      * 长度
      * @return
      */
-    int length();
+    int length() default 0;
 
     /**
      * 长度类型,等于,小于等于
      * @return
      */
-    int lengthType();
+    int lengthType() default LengthType.LESS_THAN_EQUAL_TO;
 
 }

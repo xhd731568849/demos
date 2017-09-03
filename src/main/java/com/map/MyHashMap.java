@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/10/010.
+ * public vnew class void use
  */
 public class MyHashMap<K,V> implements MyMap<K,V> {
 
