@@ -7,7 +7,18 @@ import java.util.List;
  * Created by xuhandong on 2017/8/17/017.
  */
 public class TestAnnotation {
-    public static void main(String[] args) throws IllegalAccessException {
+
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<String>();
+        list.add(null);
+        list.add(null);
+        list.add(null);
+        list.add(null);
+        list.add(null);
+        System.out.println(list.size());
+    }
+
+    public static void d(String[] args) throws IllegalAccessException {
         People people = new People();
         people.setId(1);
         people.setAge(18);
