@@ -36,7 +36,7 @@ public class TestAnnotation {
         List<People> list = new ArrayList<People>();
         list.add(people);
         list.add(people1);
-        List<TableErrorMessage> tableErrorMessages = new Validate<People>().batchValidate(list);
+        List<TableErrorMessage> tableErrorMessages = new MyValidate<People>().batchValidate(list);
         if(tableErrorMessages!=null && tableErrorMessages.size()>0) {
             for (TableErrorMessage tableErrorMessage : tableErrorMessages) {
                 if(tableErrorMessage != null) {

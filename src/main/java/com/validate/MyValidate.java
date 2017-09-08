@@ -46,7 +46,7 @@ public class MyValidate<T> {
                 if(errorMessage1 != null) {
                     errorMessages.add(errorMessage1);
                 }
-                if(annotation.id() == true){
+                if(annotation.unionKey() == true){
                     id = (Integer) field.get(t);
                 }
             }
@@ -77,12 +77,12 @@ public class MyValidate<T> {
             obj = (String) o;
         }
 
-        if(annotation.lengthType() == LenthType.EQUAL_TO){
+        if(annotation.lengthType() == LengthType.EQUAL_TO){
             //如果是只能等于该长度
             if(obj.length() != annotation.length()){
                 return new FieldErrorMessage(field.getName()+"长度不符!");
             }
-        }else if(annotation.lengthType() == LenthType.LESS_THAN_EQUAL_TO){
+        }else if(annotation.lengthType() == LengthType.LESS_THAN_EQUAL_TO){
             //小于等于该长度
             if(obj.length() > annotation.length()){
                 return new FieldErrorMessage(field.getName()+"长度不符!");
