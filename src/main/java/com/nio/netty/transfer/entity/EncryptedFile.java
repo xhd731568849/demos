@@ -1,4 +1,4 @@
-package com.transfer.entity;
+package com.nio.netty.transfer.entity;
 
 import java.beans.Transient;
 import java.io.File;

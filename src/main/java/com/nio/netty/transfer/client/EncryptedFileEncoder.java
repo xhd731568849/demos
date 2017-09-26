@@ -1,6 +1,6 @@
-package com.transfer.client;
+package com.nio.netty.transfer.client;
 
-import com.transfer.entity.EncryptedFile;
+import com.nio.netty.transfer.entity.EncryptedFile;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;

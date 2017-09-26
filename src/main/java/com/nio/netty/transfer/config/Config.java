@@ -1,4 +1,4 @@
-package com.transfer.config;
+package com.nio.netty.transfer.config;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

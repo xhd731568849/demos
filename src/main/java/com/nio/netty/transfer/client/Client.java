@@ -1,7 +1,7 @@
-package com.transfer.client;
+package com.nio.netty.transfer.client;
 
-import com.transfer.config.Config;
-import com.transfer.entity.EncryptedFile;
+import com.nio.netty.transfer.config.Config;
+import com.nio.netty.transfer.entity.EncryptedFile;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
