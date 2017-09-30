@@ -1,4 +1,4 @@
-package com.IBMTest;
+package com.algorithm.IBMTest;
 
 /**
  * 资源类

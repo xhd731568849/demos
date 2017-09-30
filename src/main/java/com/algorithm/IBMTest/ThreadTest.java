@@ -1,4 +1,4 @@
-package com.IBMTest;
+package com.algorithm.IBMTest;
 
 /**
  * IBM非常经典的线程面试题
