@@ -15,6 +15,7 @@ import java.net.InetSocketAddress;
  * Created by xuhandong on 17-9-27.
  */
 public class Client {
+
     private final String host;
     private final int port;
 
