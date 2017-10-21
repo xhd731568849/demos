@@ -1,0 +1,12 @@
+package com.btzh.mis.cg.supervise.mydao;
+
+import com.btzh.mis.cg.supervise.entity.$CLASS_NAME;
+import com.btzh.mis.core.dao.BaseDao;
+
+/**
+ * @author xhd
+ * @date $DATE
+ */
+public interface $CLASS_DAO_NAME extends BaseDao<$CLASS_NAME> {
+
+}

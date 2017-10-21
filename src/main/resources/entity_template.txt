@@ -1,0 +1,13 @@
+package com.btzh.mis.cg.supervise.myentity;
+
+import java.io.Serializable;
+import com.btzh.mis.core.dao.annotation.Table;
+
+/**
+ * @author xhd
+ * @date $DATE
+ */
+@Table(table = "$TABLE_NAME", id = "id", idField = "id", sequence = "SEQ_$TABLE_NAME")
+public class $CLASS_NAME implements Serializable {
+    $CONTENT
+}

@@ -10,7 +10,7 @@ import java.util.List;
 public class FairLock {
     private boolean isLocked = false;
     private Thread lockingThread = null;
-    private List<QueueObject> waitingThreads = new ArrayList<>();
+    private List<QueueObject> waitingThreads = new ArrayList<QueueObject>();
 
     public void lock() throws InterruptedException {
         QueueObject queueObject = new QueueObject();

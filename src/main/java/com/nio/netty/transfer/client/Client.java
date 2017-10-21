@@ -35,11 +35,11 @@ public class Client {
         logger.info("["+key+"] - Send "+encryptedFile.getType().name()+":"+encryptedFile.getFile().getAbsolutePath()+" to "+config.getRemoteHost()+":"+config.getRemotePort());
 
         long fileLength = 0;
-        try(RandomAccessFile randomAccessFile = new RandomAccessFile(file,"r")){
-            fileLength = randomAccessFile.length();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        //try(RandomAccessFile randomAccessFile = new RandomAccessFile(file,"r")){
+        //    fileLength = randomAccessFile.length();
+        //} catch (IOException e) {
+        //    throw new RuntimeException(e);
+        //}
         if(fileLength == 0){
             logger.error("["+key+"] - encrypted file's length is zero ");
             return ;
