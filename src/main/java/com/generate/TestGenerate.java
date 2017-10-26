@@ -1,7 +1,5 @@
 package com.generate;
 
-import com.btzh.mis.dep.util.JDBCUtil;
-import com.btzh.mis.dep.util.exception.DepBusinessException;
 
 import java.io.*;
 import java.sql.*;
@@ -41,17 +39,17 @@ public class TestGenerate {
             entityDirectory.mkdirs();
         }
         //获取所有的表名
-        List<Map<String, Object>> list = queryData("SELECT TABLE_NAME FROM tabs");
-        for(Map<String, Object> map : list){
-            String tableName = (String) map.get("table_name");
-            //转换成规范的java类名
-            String className = change2JavaClassName(tableName);
-            String classFileName = className + ".java";
-            File classFile = new File(entityDirectory,"\\"+classFileName);
-            classFile.createNewFile();
-            writeEntity(classFile,tableName);
-
-        }
+        //List<Map<String, Object>> list = queryData("SELECT TABLE_NAME FROM tabs");
+        //for(Map<String, Object> map : list){
+        //    String tableName = (String) map.get("table_name");
+        //    //转换成规范的java类名
+        //    String className = change2JavaClassName(tableName);
+        //    String classFileName = className + ".java";
+        //    File classFile = new File(entityDirectory,"\\"+classFileName);
+        //    classFile.createNewFile();
+        //    writeEntity(classFile,tableName);
+        //
+        //}
 
 
     }
@@ -64,7 +62,8 @@ public class TestGenerate {
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
 
         //获取所有字段
-        List<Map<String,Object>> columnList = listColumnByTableName(tableName);
+        //List<Map<String,Object>> columnList = listColumnByTableName(tableName);
+        List<Map<String,Object>> columnList = null;
         StringBuilder fieldContent = new StringBuilder();
         for(Map<String,Object> column : columnList){
             String cname = (String) column.get("cname");
@@ -107,9 +106,9 @@ public class TestGenerate {
         br.close();
     }
 
-    private static List<Map<String,Object>> listColumnByTableName(String tableName) {
-        return queryData("select cname , coltype from col where tname="+tableName);
-    }
+    //private static List<Map<String,Object>> listColumnByTableName(String tableName) {
+    //    return queryData("select cname , coltype from col where tname="+tableName);
+    //}
 
     private static String change2JavaClassName(String tableName) {
         int count = 0;
@@ -225,25 +224,25 @@ public class TestGenerate {
      * @param sql
      * @return
      */
-    private static List<Map<String, Object>> queryData(String sql) {
-        Connection connection = JDBCUtil.getConnection
-                ("oracle", "//btzh.net:1521/orcl",
-                "bm_zfjg", "bmtech");
-        if (connection == null) {
-            throw new RuntimeException("源数据源无法连接");
-        }
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        try {
-            statement = connection.prepareStatement(sql);
-            resultSet = statement.executeQuery();
-            return listData(resultSet);
-        } catch (SQLException e) {
-            throw new RuntimeException("提取数据SQL错误，错误信息：" + e.getMessage());
-        } finally {
-            JDBCUtil.closeAll(connection, statement, resultSet);
-        }
-    }
+    //private static List<Map<String, Object>> queryData(String sql) {
+    //    Connection connection = JDBCUtil.getConnection
+    //            ("oracle", "//btzh.net:1521/orcl",
+    //            "bm_zfjg", "bmtech");
+    //    if (connection == null) {
+    //        throw new RuntimeException("源数据源无法连接");
+    //    }
+    //    PreparedStatement statement = null;
+    //    ResultSet resultSet = null;
+    //    try {
+    //        statement = connection.prepareStatement(sql);
+    //        resultSet = statement.executeQuery();
+    //        return listData(resultSet);
+    //    } catch (SQLException e) {
+    //        throw new RuntimeException("提取数据SQL错误，错误信息：" + e.getMessage());
+    //    } finally {
+    //        JDBCUtil.closeAll(connection, statement, resultSet);
+    //    }
+    //}
 
 
     /**
@@ -267,7 +266,7 @@ public class TestGenerate {
                 list.add(map);
             }
         } catch (SQLException e) {
-            throw new DepBusinessException("提取数据SQL错误，错误信息：" + e.getMessage());
+            //throw new DepBusinessException("提取数据SQL错误，错误信息：" + e.getMessage());
         }
 
         return list;
