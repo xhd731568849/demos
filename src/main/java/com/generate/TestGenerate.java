@@ -252,12 +252,12 @@ public class TestGenerate {
      * @return
      */
     private static List<Map<String, Object>> listData(ResultSet resultSet) {
-        List<Map<String, Object>> list = new ArrayList<>();
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         try {
             while (resultSet.next()) {
                 ResultSetMetaData metaData = resultSet.getMetaData();
                 int count = metaData.getColumnCount();
-                Map<String, Object> map = new HashMap<>();
+                Map<String, Object> map = new HashMap<String, Object>();
                 for (int i = 1; i <= count; i++) {
                     String columnLable = metaData.getColumnLabel(i).toLowerCase();
                     Object value = resultSet.getObject(columnLable);
