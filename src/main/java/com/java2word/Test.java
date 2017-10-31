@@ -4,7 +4,9 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,9 +16,78 @@ import java.util.Map;
 public class Test {
 
     public static void main(String[] args) {
-        Map<String,String> map = new HashMap<String, String>();
-        map.put("pwd","密码");
-        map.put("addr","地址");
+        Map<String,Object> map = new HashMap<String, Object>();
+
+        List<Dept> deptList = new ArrayList<Dept>();
+        Dept dept1 = new Dept();
+        dept1.setRn(1);
+        dept1.setRnText("一");
+        dept1.setDeptName("部门1");
+        List<Catalog> list1 = new ArrayList<Catalog>();
+        Catalog catalog1 = new Catalog();
+        catalog1.setRn(1);
+        catalog1.setRestitle("名称1");
+        catalog1.setResProviderDeptName("提供方1");
+        catalog1.setResProviderCode("提供方代码1");
+        catalog1.setResFormartClassify("格式分类1");
+        catalog1.setResFormartType("格式类型1");
+        catalog1.setOtherTypeResFormatDesc("格式描述1");
+        catalog1.setShareStateText("共享1");
+        catalog1.setIsOpenText("开放1");
+        catalog1.setResUpdateFrequencyText("每天1");
+
+        Catalog catalog2 = new Catalog();
+        catalog2.setRn(2);
+        catalog2.setRestitle("名称2");
+        catalog2.setResProviderDeptName("提供方2");
+        catalog2.setResProviderCode("提供方代码2");
+        catalog2.setResFormartClassify("格式分类2");
+        catalog2.setResFormartType("格式类型2");
+        catalog2.setOtherTypeResFormatDesc("格式描述2");
+        catalog2.setShareStateText("共享2");
+        catalog2.setIsOpenText("开放2");
+        catalog2.setResUpdateFrequencyText("每天2");
+        list1.add(catalog1);
+        list1.add(catalog2);
+        dept1.setResList(list1);
+
+
+        Dept dept2 = new Dept();
+        dept2.setRn(2);
+        dept2.setRnText("二");
+        dept2.setDeptName("部门2");
+        List<Catalog> list2 = new ArrayList<Catalog>();
+        Catalog catalog3 = new Catalog();
+        catalog3.setRn(3);
+        catalog3.setRestitle("名称3");
+        catalog3.setResProviderDeptName("提供方3");
+        catalog3.setResProviderCode("提供方代码3");
+        catalog3.setResFormartClassify("格式分类3");
+        catalog3.setResFormartType("格式类型3");
+        catalog3.setOtherTypeResFormatDesc("格式描述3");
+        catalog3.setShareStateText("共享3");
+        catalog3.setIsOpenText("开放3");
+        catalog3.setResUpdateFrequencyText("每天3");
+
+        Catalog catalog4 = new Catalog();
+        catalog4.setRn(4);
+        catalog4.setRestitle("名称4");
+        catalog4.setResProviderDeptName("提供方4");
+        catalog4.setResProviderCode("提供方代码4");
+        catalog4.setResFormartClassify("格式分类4");
+        catalog4.setResFormartType("格式类型4");
+        catalog4.setOtherTypeResFormatDesc("格式描述4");
+        catalog4.setShareStateText("共享4");
+        catalog4.setIsOpenText("开放4");
+        catalog4.setResUpdateFrequencyText("每天4");
+        list2.add(catalog3);
+        list2.add(catalog4);
+        dept2.setResList(list2);
+
+        deptList.add(dept1);
+        deptList.add(dept2);
+        map.put("deptList",deptList);
+
         createDoc(map,"resume");
     }
 
@@ -29,9 +100,9 @@ public class Test {
         configuration = new Configuration();
         configuration.setDefaultEncoding("utf-8");
         configuration.setClassForTemplateLoading(Test.class, "/");
-        allTemplates = new HashMap<String, Template>();   // Java 7 钻石语法
+        allTemplates = new HashMap<String, Template>();   //
         try {
-            allTemplates.put("resume", configuration.getTemplate("ftl/template.ftl"));
+            allTemplates.put("resume", configuration.getTemplate("编目word模板.ftl"));
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
