@@ -104,9 +104,9 @@ public class JDBCUtil {
     //
     //private static Connection getConnectionIn(String driverClassName, String jdbcUrl, String username, String password) {
     //    String key = driverClassName + jdbcUrl + username;
-    //    HikariDataSource dataSource;
+    //    HikariDataSource datasource;
     //    if(dbPool.containsKey(key)) {
-    //        dataSource = (HikariDataSource)dbPool.get(key);
+    //        datasource = (HikariDataSource)dbPool.get(key);
     //    } else {
     //        HikariConfig config = new HikariConfig();
     //        config.setDriverClassName(driverClassName);
@@ -119,16 +119,16 @@ public class JDBCUtil {
     //        config.setMaxLifetime((long)MAX_LIFE_TIME.intValue());
     //        config.setMaximumPoolSize(MAXIMUM_POOL_SIZE.intValue());
     //        config.setMinimumIdle(MINIMUM_IDLE.intValue());
-    //        dataSource = new HikariDataSource(config);
-    //        dbPool.put(key, dataSource);
+    //        datasource = new HikariDataSource(config);
+    //        dbPool.put(key, datasource);
     //    }
     //
     //    try {
-    //        return dataSource.getConnection();
+    //        return datasource.getConnection();
     //    } catch (SQLException var7) {
     //        log.error("getConnection is error:" + var7.toString());
     //        var7.printStackTrace();
-    //        dataSource.resumePool();
+    //        datasource.resumePool();
     //        return null;
     //    }
     //}
