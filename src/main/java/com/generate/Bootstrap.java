@@ -11,7 +11,7 @@ import java.util.Date;
  * @author xhd
  * @date 2017-10-20
  */
-public class TestGenerate {
+public class Bootstrap {
 
     private static String packageName;
     private static String entityDirectoryPath;

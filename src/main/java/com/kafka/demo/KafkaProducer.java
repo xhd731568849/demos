@@ -14,7 +14,7 @@ import kafka.producer.ProducerConfig;
  */
 public class KafkaProducer {
     private final Producer<String, String> producer;
-    public final static String TOPIC = "TEST-TOPIC";
+    public final static String TOPIC = "created_by_java_demo_1";
     private KafkaProducer() {
         Properties props = new Properties();
         /**
@@ -42,7 +42,7 @@ public class KafkaProducer {
             String key = String.valueOf(messageNo);
             String data = "许寒栋" + key;
             producer.send(new KeyedMessage<String, String>(TOPIC, key, data));
-            System.out.println(data);
+                System.out.println(data);
             messageNo++;
         }
     }

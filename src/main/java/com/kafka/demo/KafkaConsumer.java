@@ -59,5 +59,6 @@ public class KafkaConsumer {
 
     public static void main(String[] args) {
         new KafkaConsumer().consume();
+        System.out.println(123);
     }
 }
