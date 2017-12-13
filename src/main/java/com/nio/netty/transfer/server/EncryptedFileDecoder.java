@@ -8,6 +8,8 @@ import io.netty.util.CharsetUtil;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.attribute.PosixFilePermissions;
@@ -70,8 +72,18 @@ public class EncryptedFileDecoder extends ByteToMessageDecoder {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         LoggerFactory.getLogger(BusinessProcessor.class);
+        closeOutputStream();
+        ctx.close();
     }
 
     private void closeOutputStream() {
+        OutputStream outputStream = encryptedFile.getOutputStream();
+        if( null != outputStream){
+            try{
+                outputStream.close();
+            }catch (IOException e){
+                LoggerFactory.getLogger(EncryptedFileDecoder.class).error(e.getMessage(),e);
+            }
+        }
     }
 }
