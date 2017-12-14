@@ -101,6 +101,11 @@
             <artifactId>freemarker</artifactId>
             <version>2.3.26-incubating</version>
         </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     <!-- Hadoop -->
 
         <!--Kafka和spring集成的支持类库，spring和kafka通信监听-->
