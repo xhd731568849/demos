@@ -9,7 +9,6 @@ public class User {
     private Integer sex;
     private String phone;
     private Integer age;
-
     public Integer getAge() {
         return age;
     }
