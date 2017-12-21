@@ -1,0 +1,1 @@
+java -jar dep-transfer-0.0.1.jar

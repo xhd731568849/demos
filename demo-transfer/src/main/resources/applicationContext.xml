@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:tx="http://www.springframework.org/schema/tx" xmlns:task="http://www.springframework.org/schema/task"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.3.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="com.btzh" />
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	
+	<bean id="configProperties" class="com.btzh.config.CustomPropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>file:config.properties</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+		<property name="properties" ref="configProperties" />
+	</bean>
+
+	<!--抽取数据源-->
+	<bean id="extractDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg>
+			<bean class="com.zaxxer.hikari.HikariConfig">
+				<property name="poolName" value="HikariDataSource"/>
+				<property name="driverClassName" value="${extract.jdbc.driverClassName}"/>
+				<property name="jdbcUrl" value="${extract.jdbc.url}"/>
+				<property name="username" value="${extract.jdbc.username}"/>
+				<property name="password" value="${extract.jdbc.password}"/>
+				<property name="autoCommit" value="false"/>
+				<property name="connectionTimeout" value="30000"/>
+				<property name="idleTimeout" value="600000"/>
+				<property name="maxLifetime" value="1800000"/>
+				<property name="connectionTestQuery" value="SELECT 1 FROM DUAL"/>
+				<property name="maximumPoolSize" value="${extract.jdbc.maximumpoolsize}"/>
+				<property name="minimumIdle" value="${extract.jdbc.minimumIdle}"/>
+			</bean>
+		</constructor-arg>
+	</bean>
+	<bean id="extractJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="extractDataSource"></property>
+	</bean>
+	<bean id="extractTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="extractDataSource"></property>
+	</bean>
+	<tx:advice id="extractTransactionAdvice" transaction-manager="extractTransactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut expression="execution(* com.btzh.dao.ExtractDAO.*(..))" id="extractAllManagerMethod" />
+		<aop:advisor advice-ref="extractTransactionAdvice" pointcut-ref="extractAllManagerMethod" />
+	</aop:config>
+
+	<!--入库数据源-->
+	<bean id="enterDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg>
+			<bean class="com.zaxxer.hikari.HikariConfig">
+				<property name="poolName" value="HikariDataSource"/>
+				<property name="driverClassName" value="${enter.jdbc.driverClassName}"/>
+				<property name="jdbcUrl" value="${enter.jdbc.url}"/>
+				<property name="username" value="${enter.jdbc.username}"/>
+				<property name="password" value="${enter.jdbc.password}"/>
+				<property name="autoCommit" value="false"/>
+				<property name="connectionTimeout" value="30000"/>
+				<property name="idleTimeout" value="600000"/>
+				<property name="maxLifetime" value="1800000"/>
+				<property name="connectionTestQuery" value="SELECT 1 FROM DUAL"/>
+				<property name="maximumPoolSize" value="${enter.jdbc.maximumpoolsize}"/>
+				<property name="minimumIdle" value="${enter.jdbc.minimumIdle}"/>
+			</bean>
+		</constructor-arg>
+	</bean>
+	<bean id="enterJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="enterDataSource"></property>
+	</bean>
+	<bean id="enterTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="enterDataSource"></property>
+	</bean>
+	<tx:advice id="enterTransactionAdvice" transaction-manager="enterTransactionManager">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut expression="execution(* com.btzh.dao.EnterDAO.*(..))" id="enterAllManagerMethod" />
+		<aop:advisor advice-ref="enterTransactionAdvice" pointcut-ref="enterAllManagerMethod" />
+	</aop:config>
+
+	<!--spring定时任务-->
+	<task:annotation-driven/>
+
+	<!--定时任务，每天两点定时查询数据库信息-->
+	<task:scheduled-tasks>
+		<task:scheduled ref="dbDataSend" method="send" cron="${dataBaseInfoQuartz.corn}"/>
+	</task:scheduled-tasks>
+
+	<task:scheduled-tasks>
+		<task:scheduled ref="fileSend" method="send" cron="${fileInfoQuartz.corn}"/>
+	</task:scheduled-tasks>
+
+</beans>

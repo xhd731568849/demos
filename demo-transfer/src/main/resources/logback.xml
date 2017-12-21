@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.padual.com/java/logback.xsd" debug="true" scan="false">
+	<property name="LOG_HOME" value="logs" />
+	<appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/transfer.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/transfer.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<totalSizeCap>3GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="trace" level="TRACE" additivity="false">
+		<appender-ref ref="fileAppender" />
+	</logger>
+	<logger name="debug" level="DEBUG" additivity="false">
+		<appender-ref ref="fileAppender" />
+	</logger>
+	<logger name="info" level="INFO" additivity="false">
+		<appender-ref ref="fileAppender" />
+	</logger>
+	<logger name="warn" level="WARN" additivity="false">
+		<appender-ref ref="fileAppender" />
+	</logger>
+	<logger name="error" level="ERROR" additivity="false">
+		<appender-ref ref="fileAppender" />
+	</logger>
+
+	<root level="INFO">
+		<appender-ref ref="fileAppender" />
+	</root>
+</configuration>

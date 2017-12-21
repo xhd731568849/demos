@@ -14,30 +14,30 @@ import java.net.ServerSocket;
 /**
  * Created by xuhandong on 17-9-26.
  */
-public class Server {
-    private EventLoopGroup bossGroup;
-    private EventLoopGroup workerGroup;
-
-    public void start(Config config){
-        bossGroup = new NioEventLoopGroup();
-        workerGroup = new NioEventLoopGroup();
-
-        try {
-            ServerBootstrap serverBootstrap = new ServerBootstrap();
-            serverBootstrap.group(bossGroup,workerGroup);
-            serverBootstrap.channel(NioServerSocketChannel.class);
-            serverBootstrap.option(ChannelOption.SO_BACKLOG,2048);
-            serverBootstrap.childHandler(new ChannelInitializer<ServerSocket>() {
-                @Override
-                protected void initChannel(Channel channel) throws Exception {
-                    channel.pipeline().addLast(new EncryptedFileDecoder(config.getRepository())).addLast(new BusinessProcessor());
-                }
-            });
-
-
-        }catch (Exception e){
-
-        }
-
-    }
-}
+//public class Server {
+//    private EventLoopGroup bossGroup;
+//    private EventLoopGroup workerGroup;
+//
+//    public void start(Config config){
+//        bossGroup = new NioEventLoopGroup();
+//        workerGroup = new NioEventLoopGroup();
+//
+//        try {
+//            ServerBootstrap serverBootstrap = new ServerBootstrap();
+//            serverBootstrap.group(bossGroup,workerGroup);
+//            serverBootstrap.channel(NioServerSocketChannel.class);
+//            serverBootstrap.option(ChannelOption.SO_BACKLOG,2048);
+//            serverBootstrap.childHandler(new ChannelInitializer<ServerSocket>() {
+//                @Override
+//                protected void initChannel(Channel channel) throws Exception {
+//                    channel.pipeline().addLast(new EncryptedFileDecoder(config.getRepository())).addLast(new BusinessProcessor());
+//                }
+//            });
+//
+//
+//        }catch (Exception e){
+//
+//        }
+//
+//    }
+//}
